@@ -1,0 +1,55 @@
+English:
+1. hi
+2. bye
+3. cat
+4. dog
+5. person
+6. rice
+7. black
+8. tomorrow
+9. yesterday
+10. today
+11. yes
+12. no
+
+Spanish:
+1. hola
+2. adios
+3. gato
+4. perro
+5. persona
+6. arroz
+7. negro
+8. mañana
+9. ayer
+10. hoy
+11. si
+12. no
+
+Greek:
+1. γεια
+2. αντιο
+3. γατα
+4. σκυλο
+5. προσωπο
+6. ρυζι
+7. μαυρος
+8. αυριο
+9. εχθες
+10. σημερα
+11. ναι
+12. οχι
+
+Japanese:
+1. こんにちは
+2. さよなら
+3. 猫
+4. 犬
+5. 人
+6. 御飯
+7. 黒
+8. 明日
+9. 昨日
+10. 今日
+11. はい
+12. いいえ
