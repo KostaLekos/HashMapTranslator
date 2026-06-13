@@ -5,7 +5,6 @@
 // https://www.geeksforgeeks.org/java/how-to-implement-a-bidirectional-map-using-two-hashsets-in-java/
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,8 +13,7 @@ public class HashBiMap<K, V> {
     private final Map<V, K> valueToKeyMap = new HashMap<>();
 
     // method to put a key-value pair into the bidirectional map
-    public void put(K key, V value) 
-    {
+    public void put(K key, V value) {
         keyToValueMap.put(key, value);
         valueToKeyMap.put(value, key);
     }
@@ -66,6 +64,12 @@ public class HashBiMap<K, V> {
     // method to get a set of all values in the bidirectional map
     public Set<V> getAllValues() {
         return valueToKeyMap.keySet();
+    }
+
+    public void replace(K key, V value) {
+        V oldValue = keyToValueMap.replace(key, value);
+        valueToKeyMap.remove(oldValue);
+        valueToKeyMap.put(value, key);
     }
 
     // Main method to demonstrate the usage of the HashBiMap class
