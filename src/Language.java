@@ -32,8 +32,8 @@ public class Language {
 
 
     // Replaces a translation for a word in the lingua franca; won't do anything if translation does not already exist
-    public void replaceTranslation(String word, String translation) {
-        translationDictionary.replace(word, translation);
+    public boolean replaceTranslation(String word, String translation) {
+        return translationDictionary.replace(word, translation);
     }
 
     // Will replace multiple translations for words in the lingua franca by matching up indices of each array
@@ -94,12 +94,12 @@ public class Language {
 
 
     // Translates a word into the lingua franca
-    public String backwardTranslate(String translation) {
+    public String reverseTranslate(String translation) {
         return translationDictionary.getKeyByValue(translation);
     }
 
     // Translates multiple words into the lingua franca
-    public String[] backwardTranslate(String[] translations) {
+    public String[] reverseTranslate(String[] translations) {
         String[] words = new String[translations.length];
 
         for (int i = 0; i < translations.length; i++) {
@@ -109,7 +109,7 @@ public class Language {
     }
 
     // Will print a table of all the translations between itself and the lingua franca
-    public void printAllTranslationsBackward() {
+    public void printAllReverseTranslations() {
         Iterator<String> translations = translationDictionary.getAllValues().iterator();
 
         String currentTranslation;
@@ -118,6 +118,11 @@ public class Language {
             System.out.println(currentTranslation + "\t\t= " + translationDictionary.getKeyByValue(currentTranslation));
         }
         System.out.println();
+    }
+
+
+    public HashBiMap<String, String> getBiMap() {
+        return translationDictionary;
     }
 
 

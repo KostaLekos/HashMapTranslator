@@ -66,10 +66,12 @@ public class HashBiMap<K, V> {
         return valueToKeyMap.keySet();
     }
 
-    public void replace(K key, V value) {
+    public boolean replace(K key, V value) {
+        if (!keyToValueMap.containsKey(key)) return false;
         V oldValue = keyToValueMap.replace(key, value);
         valueToKeyMap.remove(oldValue);
         valueToKeyMap.put(value, key);
+        return true;
     }
 
     // Main method to demonstrate the usage of the HashBiMap class
