@@ -1,3 +1,7 @@
+Words used for quick test
+Each word is equivelent to all other words with the same number
+Translations may not be accurate as I only have beginner to intermediate knowledge of each language (other than English of course)
+
 English:
 1. hi
 2. bye

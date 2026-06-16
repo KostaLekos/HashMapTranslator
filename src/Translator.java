@@ -1,6 +1,8 @@
 // Kosta Lekos
 // June 12th, 2026
 // This is the main file to run
+// Enter 'quick test' to quickly add languages and word
+// To see what was added, use the list languages and list translations options
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -109,17 +111,22 @@ public class Translator {
         String word = s.nextLine().toLowerCase();
         String translation = "ERROR";
         System.out.println();
+        
+        if (word.trim().equals("")) {
+            System.out.println("\"" + word + "\" is not a word.");
+            return;
+        }
 
         if (sourceName.equals(targetName)) { // No two languages can have the same name
             translation = word;
         } else {
             if (sourceName.equals(linguaFranca)) {
-                translation = target.reverseTranslate(word);
-            } else if (targetName.equals(linguaFranca)) {
                 translation = target.translate(word);
+            } else if (targetName.equals(linguaFranca)) {
+                translation = source.reverseTranslate(word);
             } else {
-                String temp = source.translate(word);
-                translation = target.reverseTranslate(temp);
+                String temp = source.reverseTranslate(word);
+                translation = target.translate(temp);
             }
         }
 
@@ -142,9 +149,19 @@ public class Translator {
         String word = s.nextLine().toLowerCase();
         System.out.println();
 
+        if (word.trim().equals("")) {
+            System.out.println("\"" + word + "\" is not a word.");
+            return;
+        }
+
         System.out.print("Enter translation in " + l.name + ": ");
         String translation = s.nextLine().toLowerCase();
         System.out.println();
+
+        if (translation.trim().equals("")) {
+            System.out.println("\"" + translation + "\" is not a word.");
+            return;
+        }
 
         l.addTranslation(word, translation);
         System.out.println("Added \"" + word + " = " + translation + "\" to " + l.name + " dictionary.");
@@ -162,9 +179,19 @@ public class Translator {
         String word = s.nextLine().toLowerCase();
         System.out.println();
 
+        if (word.trim().equals("")) {
+            System.out.println("\"" + word + "\" is not a word.");
+            return;
+        }
+
         System.out.print("Enter new translation in " + l.name + ": ");
         String newTranslation = s.nextLine().toLowerCase();
         System.out.println();
+
+        if (newTranslation.trim().equals("")) {
+            System.out.println("\"" + newTranslation + "\" is not a word.");
+            return;
+        }
 
         boolean isReplaced = l.replaceTranslation(word, newTranslation);
 
@@ -191,7 +218,7 @@ public class Translator {
         System.out.println("Removed \"" + word + "\" from " + l.name + " dictionary.");
     }
 
-    public static void printAllTranslations(String linguaFranca, ArrayList<Language> languages, Scanner s) { // not yet implemented
+    public static void printAllTranslations(String linguaFranca, ArrayList<Language> languages, Scanner s) {
         if (languages.isEmpty()) {
             System.out.println("Not enough languages to preform this action. Try adding a language first.");
             return;
@@ -202,10 +229,10 @@ public class Translator {
         String sourceName = (source == null) ? (linguaFranca) : (source.name);
         String targetName = (target == null) ? (linguaFranca) : (target.name);
 
-        if (target.isEmpty()) {
+        if (target != null && target.isEmpty()) {
             System.out.println(targetName + " does not have any translations.");
             return;
-        } else if (source.isEmpty()) {
+        } else if (source != null && source.isEmpty()) {
             System.out.println(sourceName + " does not have any translations.");
             return;
         }
@@ -221,11 +248,11 @@ public class Translator {
             }
         } else {
             if (sourceName.equals(linguaFranca)) {
-                target.printAllReverseTranslations();
+                target.printAllTranslations();
             } else if (targetName.equals(linguaFranca)) {
-                source.printAllTranslations();
+                source.printAllReverseTranslations();
             } else {
-                Iterator<String> words = source.getBiMap().getAllKeys().iterator();
+                Iterator<String> words = source.getBiMap().getAllValues().iterator();
 
                 String currentWord;
                 String temp;
@@ -314,6 +341,7 @@ public class Translator {
         Scanner s = new Scanner(System.in);
         String inputString;
         int inputInt;
+        boolean testRan = false; // Whether or not quick test has been run
 
         String linguaFranca = "English";
         if (args.length > 0) {
@@ -334,7 +362,6 @@ public class Translator {
                 inputInt = -1;
             }
 
-            // Not yet implemented
             if (inputInt == 0 || inputString.toLowerCase().equals("help")) {
                 printMainMenu();
             } else if (inputInt == 1 || inputString.equals("")) {
@@ -357,6 +384,40 @@ public class Translator {
                 printAllLanguages(linguaFranca, languages);
             } else if (inputInt == 10 || inputString.toLowerCase().equals("exit")) {
                 break;
+            } else if (inputString.toLowerCase().substring(0, 10).equals("quick test")) {
+                if (testRan && !inputString.toLowerCase().equals("quick test force")) {
+                    System.out.println("Quick test has already been run.");
+                } else if (linguaFranca.equals("English")) {
+                    languages.add(new Language("Spanish"));
+                    languages.add(new Language("Greek"));
+                    languages.add(new Language("Japanese"));
+
+                    String[] enWords = {"hi", "bye", "cat", "dog", 
+                                        "person", "rice", "black", "tomorrow", 
+                                        "yesterday", "today", "yes", "no"};
+            
+                    String[] spWords = {"hola", "adios", "gata", "perro", 
+                                        "persona", "arroz", "negro", "mañana", 
+                                        "ayer", "hoy", "si", "no"};
+            
+                    String[] grWords = {"γεια", "αντιο", "γατα", "σκυλο", 
+                                        "προσωπο", "ρυζι", "μαυρος", "αυριο", 
+                                        "εχθες", "σημερα", "ναι", "οχι"};
+            
+                    String[] jaWords = {"こんにちは", "さよなら", "猫", "犬", 
+                                        "人", "御飯", "黒", "明日", 
+                                        "昨日", "今日", "はい", "いいえ"};
+            
+                    getLanguage("Spanish", languages).addTranslations(enWords, spWords);
+                    getLanguage("Greek", languages).addTranslations(enWords, grWords);
+                    getLanguage("Japanese", languages).addTranslations(enWords, jaWords);                    
+
+                    System.out.println("Quick test ran. You can view what was added with options 5 and 9.");
+                    testRan = true;
+                } else {
+                    System.out.println("Quick test requires lingua franca to be English. It is currently " + linguaFranca + ".");
+                }
+
             } else {
                 System.out.println("Invalid option, please try again.");
             }
