@@ -74,9 +74,15 @@ public class HashBiMap<K, V> {
         return true;
     }
 
+    public boolean isEmpty() {
+        return valueToKeyMap.isEmpty();
+    }
+
     // Main method to demonstrate the usage of the HashBiMap class
     public static void main(String[] args) {
-        // Create a HashBiMap with Integer keys and String values
+        System.out.println("\nIf you are trying to use the translator, run Translator.java instead.");
+
+/*      // Create a HashBiMap with Integer keys and String values
         HashBiMap<Integer, String> biMap = new HashBiMap<>();
 
         // Add key-value pairs
@@ -105,6 +111,6 @@ public class HashBiMap<K, V> {
         biMap.removeAll();
 
         // checks if the map is empty after clearing
-        System.out.println("Is the map empty? " + (biMap.getAllKeys().isEmpty() && biMap.getAllValues().isEmpty()));
+        System.out.println("Is the map empty? " + (biMap.getAllKeys().isEmpty() && biMap.getAllValues().isEmpty())); */
     }
 }

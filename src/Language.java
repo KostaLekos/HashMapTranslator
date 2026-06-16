@@ -89,7 +89,6 @@ public class Language {
             currentWord = words.next();
             System.out.println(currentWord + "\t\t= " + translationDictionary.getValueByKey(currentWord));
         }
-        System.out.println();
     }
 
 
@@ -117,7 +116,6 @@ public class Language {
             currentTranslation = translations.next();
             System.out.println(currentTranslation + "\t\t= " + translationDictionary.getKeyByValue(currentTranslation));
         }
-        System.out.println();
     }
 
 
@@ -125,8 +123,14 @@ public class Language {
         return translationDictionary;
     }
 
+    public boolean isEmpty() {
+        return translationDictionary.isEmpty();
+    }
+
 
     public static void main(String[] args) {
+        System.out.println("\nIf you are trying to use the translator, run Translator.java instead.");
+
         // These languages are only examples
         // Translations may not be accurate as I only have beginner knowledge of each (other than English of course)
         // In this example the lingua franca is English, but it could work as a different language

@@ -1,5 +1,6 @@
 // Kosta Lekos
 // June 12th, 2026
+// This is the main file to run
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,16 +16,19 @@ public class Translator {
 
     private static Language selectLanguage(ArrayList<Language> languages, Scanner s) { // Returns a language from language list (lingua franca is not and option)
         int length = languages.size();
-        System.out.println("Pick a language by number (0-" + (length - 1) + ")");
 
-        for (int i = 0; i < length; i++) {
-            System.out.println(i + ". " + languages.get(i).name);
+        System.out.println("Pick a language by number (1-" + (length) + "):");
+
+        for (int i = 1; i <= length; i++) {
+            System.out.println(i + ". " + languages.get(i - 1).name);
         }
 
         int chosenLanguage = -1;
         while (true) {
             try {
-                chosenLanguage = Integer.valueOf(s.nextLine());
+                System.out.print("> ");
+                chosenLanguage = Integer.valueOf(s.nextLine()) - 1;
+                System.out.println();
                 if (chosenLanguage >= 0 && chosenLanguage < length) {
                     break;
                 } else {
@@ -39,18 +43,20 @@ public class Translator {
 
     private static Language selectLanguage(String linguaFranca, ArrayList<Language> languages, Scanner s, boolean isSource) { // Also includes lingua franca as option
         int length = languages.size();
-        System.out.println("Pick a " + ((isSource) ? ("source ") : ("target ")) + "language by number (0-" + (length) + ")");
+        System.out.println("Pick a " + ((isSource) ? ("source ") : ("target ")) + "language by number (1-" + (length + 1) + "):");
 
         System.out.println("1. " + linguaFranca);
-        for (int i = 1; i <= length; i++) {
-            System.out.println(i + ". " + languages.get(i).name);
+        for (int i = 2; i <= length + 1; i++) {
+            System.out.println(i + ". " + languages.get(i - 2).name);
         }
 
         int chosenLanguage = -1;
         while (true) {
             try {
-                chosenLanguage = Integer.valueOf(s.nextLine());
-                if (chosenLanguage >= 0 && chosenLanguage <= length) {
+                System.out.print("> ");
+                chosenLanguage = Integer.valueOf(s.nextLine()) - 2;
+                System.out.println();
+                if (chosenLanguage >= -1 && chosenLanguage < length) {
                     break;
                 } else {
                     System.out.println("Answer is not a valid language, please try again.");
@@ -59,8 +65,8 @@ public class Translator {
                 System.out.println("Answer is not a number, please try again.");
             }
         }
-        if (chosenLanguage <= 0) return null; // null = lingua franca, outside function will interpret this result as so
-        return languages.get(chosenLanguage - 1);
+        if (chosenLanguage <= -1) return null; // null = lingua franca, outside function will interpret this result as so
+        return languages.get(chosenLanguage);
     }
 
     private static Language getLanguage(String languageName, ArrayList<Language> languages) { // Get language from language name
@@ -89,13 +95,18 @@ public class Translator {
 
 
     public static void translate(String linguaFranca, ArrayList<Language> languages, Scanner s) {
+        if (languages.isEmpty()) {
+            System.out.println("Not enough languages to preform this action. Try adding a language first.");
+            return;
+        }
+
         Language source = selectLanguage(linguaFranca, languages, s, true);
         Language target = selectLanguage(linguaFranca, languages, s, false);
         String sourceName = (source == null) ? (linguaFranca) : (source.name);
         String targetName = (target == null) ? (linguaFranca) : (target.name);
 
         System.out.print("Enter word in " + sourceName + ": ");
-        String word = capitalizeFirst(s.nextLine());
+        String word = s.nextLine().toLowerCase();
         String translation = "ERROR";
         System.out.println();
 
@@ -111,10 +122,20 @@ public class Translator {
                 translation = target.reverseTranslate(temp);
             }
         }
-        System.out.println(word + " in " + sourceName + " is equal to " + translation + " in " + targetName + ".");
+
+        if (translation == null) {
+            System.out.println("No translation for " + word + " currently exists in " + targetName);
+        } else {
+            System.out.println(word + " in " + sourceName + " is equal to " + translation + " in " + targetName + ".");
+        }
     }
 
     public static void addTranslation(String linguaFranca, ArrayList<Language> languages, Scanner s) {
+        if (languages.isEmpty()) {
+            System.out.println("Not enough languages to preform this action. Try adding a language first.");
+            return;
+        }
+
         Language l = selectLanguage(languages, s);
 
         System.out.print("Enter word in " + linguaFranca + ": ");
@@ -126,10 +147,15 @@ public class Translator {
         System.out.println();
 
         l.addTranslation(word, translation);
-        System.out.println("Added \"" + word + "\" to " + l.name + " dictionary.");
+        System.out.println("Added \"" + word + " = " + translation + "\" to " + l.name + " dictionary.");
     }
 
     public static void replaceTranslation(String linguaFranca, ArrayList<Language> languages, Scanner s) {
+        if (languages.isEmpty()) {
+            System.out.println("Not enough languages to preform this action. Try adding a language first.");
+            return;
+        }
+
         Language l = selectLanguage(languages, s);
 
         System.out.print("Enter word in " + linguaFranca + ": ");
@@ -150,6 +176,11 @@ public class Translator {
     }
 
     public static void removeTranslation(String linguaFranca, ArrayList<Language> languages, Scanner s) {
+        if (languages.isEmpty()) {
+            System.out.println("Not enough languages to preform this action. Try adding a language first.");
+            return;
+        }
+
         Language l = selectLanguage(languages, s);
 
         System.out.print("Enter word in " + linguaFranca + " to remove: ");
@@ -161,10 +192,23 @@ public class Translator {
     }
 
     public static void printAllTranslations(String linguaFranca, ArrayList<Language> languages, Scanner s) { // not yet implemented
+        if (languages.isEmpty()) {
+            System.out.println("Not enough languages to preform this action. Try adding a language first.");
+            return;
+        }
+
         Language source = selectLanguage(linguaFranca, languages, s, true);
         Language target = selectLanguage(linguaFranca, languages, s, false);
         String sourceName = (source == null) ? (linguaFranca) : (source.name);
         String targetName = (target == null) ? (linguaFranca) : (target.name);
+
+        if (target.isEmpty()) {
+            System.out.println(targetName + " does not have any translations.");
+            return;
+        } else if (source.isEmpty()) {
+            System.out.println(sourceName + " does not have any translations.");
+            return;
+        }
 
         System.out.println(sourceName + "\t\tto " + targetName);
         if (sourceName.equals(targetName)) { // No two languages can have the same name
@@ -175,12 +219,11 @@ public class Translator {
                 currentWord = words.next();
                 System.out.println(currentWord + "\t\t= " + currentWord);
             }
-            System.out.println();
         } else {
             if (sourceName.equals(linguaFranca)) {
-                source.printAllTranslations();
-            } else if (targetName.equals(linguaFranca)) {
                 target.printAllReverseTranslations();
+            } else if (targetName.equals(linguaFranca)) {
+                source.printAllTranslations();
             } else {
                 Iterator<String> words = source.getBiMap().getAllKeys().iterator();
 
@@ -193,16 +236,15 @@ public class Translator {
                     currentTranslation = target.translate(temp);
                     System.out.println(currentWord + "\t\t= " + currentTranslation);
                 }
-                System.out.println();
             }
         }
     }
 
-    public static void addLanguage(ArrayList<Language> languages, Scanner s) {
+    public static void addLanguage(String linguaFranca, ArrayList<Language> languages, Scanner s) {
         System.out.print("Enter name of new language: ");
         String languageName = capitalizeFirst(s.nextLine());
         System.out.println();
-        if (getLanguage(languageName, languages) == null) {
+        if (!languageName.equals(linguaFranca) && getLanguage(languageName, languages) == null) {
             languages.add(new Language(languageName));
             System.out.println("Added " + languageName + " language.");
         } else {
@@ -210,7 +252,7 @@ public class Translator {
         }
     }
 
-    public static void renameLanguage(String linguaFranca, ArrayList<Language> languages, Scanner s) {
+    public static String renameLanguage(String linguaFranca, ArrayList<Language> languages, Scanner s) {
         System.out.print("Enter old name of language: ");
         String oldName = capitalizeFirst(s.nextLine());
         System.out.println();
@@ -219,20 +261,44 @@ public class Translator {
         String newName = capitalizeFirst(s.nextLine());
         System.out.println();
 
-        getLanguage(oldName, languages).name = newName;
-        System.out.println("Renamed " + oldName + " language to " + newName + ".");
+        if (oldName.equals(linguaFranca)) {
+            linguaFranca = newName;
+            return linguaFranca;
+        }
+
+        Language l = getLanguage(oldName, languages);
+        if (l == null) {
+            System.out.println(oldName + " does not currently exist. You may want to add " + newName + " instead.");
+        } else {
+            l.name = newName;
+            System.out.println("Renamed " + oldName + " language to " + newName + ".");
+        }
+        return null;
     }
 
-    public static void removeLanguage(ArrayList<Language> languages, Scanner s) {
+    public static void removeLanguage(String linguaFranca, ArrayList<Language> languages, Scanner s) {
+        if (languages.isEmpty()) {
+            System.out.println("Not enough languages to preform this action. Try adding a language first.");
+            return;
+        }
+
         System.out.print("Enter name of language to remove: ");
         String languageName = capitalizeFirst(s.nextLine());
         System.out.println();
 
+        if (languageName.equalsIgnoreCase(linguaFranca)) {
+            System.out.println("Cannot remove the lingua franca. You may rename it and replace all its translations instead if you wish.\n" + 
+            "Alternatively, a simplier solution would be to run a new instance of the program with a new lingua franca.");
+            return;
+        }
+
         for (int i = 0; i < languages.size(); i++) {
             if (languages.get(i).name.equals(languageName))
                 languages.remove(i);
+                System.out.println("Removed " + languageName + " language.");
+                return;
         }
-        System.out.println("Removed " + languageName + " language.");
+        System.out.println(languageName + " does not exist.");
     }
 
     public static void printAllLanguages(String linguaFranca, ArrayList<Language> languages) {
@@ -244,10 +310,10 @@ public class Translator {
     }
 
 
-
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        String input;
+        String inputString;
+        int inputInt;
 
         String linguaFranca = "English";
         if (args.length > 0) {
@@ -255,40 +321,46 @@ public class Translator {
         }
         ArrayList<Language> languages = new ArrayList<>();
 
+        System.out.println();
         printMainMenu();
         while (true) {
             System.out.println();
             System.out.print("Pick your action (0-10): ");
-            input = s.nextLine();
+            inputString = s.nextLine();
+            System.out.println();
+            try {
+                inputInt = Integer.valueOf(inputString);
+            } catch (Exception e) {
+                inputInt = -1;
+            }
 
             // Not yet implemented
-            if (input == "0" || input.toLowerCase() == "help") {
+            if (inputInt == 0 || inputString.toLowerCase().equals("help")) {
                 printMainMenu();
-            } else if (input == "1" || input == "") {
-                
-            } else if (input == "2") {
-                
-            } else if (input == "3") {
-                
-            } else if (input == "4") {
-                
-            } else if (input == "5") {
-                
-            } else if (input == "6") {
-                
-            } else if (input == "7") {
-                
-            } else if (input == "8") {
-                
-            } else if (input == "9") {
-                
-            } else if (input == "10" || input.toLowerCase() == "exit") {
+            } else if (inputInt == 1 || inputString.equals("")) {
+                translate(linguaFranca, languages, s);
+            } else if (inputInt == 2) {
+                addTranslation(linguaFranca, languages, s);
+            } else if (inputInt == 3) {
+                removeTranslation(linguaFranca, languages, s);
+            } else if (inputInt == 4) {
+                removeTranslation(linguaFranca, languages, s);
+            } else if (inputInt == 5) {
+                printAllTranslations(linguaFranca, languages, s);
+            } else if (inputInt == 6) {
+                addLanguage(linguaFranca, languages, s);
+            } else if (inputInt == 7) {
+                renameLanguage(linguaFranca, languages, s);
+            } else if (inputInt == 8) {
+                removeLanguage(linguaFranca, languages, s);
+            } else if (inputInt == 9) {
+                printAllLanguages(linguaFranca, languages);
+            } else if (inputInt == 10 || inputString.toLowerCase().equals("exit")) {
                 break;
             } else {
                 System.out.println("Invalid option, please try again.");
             }
         }
-
         s.close();
     }
 }
