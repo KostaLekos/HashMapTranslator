@@ -30,6 +30,7 @@ public class Translator {
             try {
                 System.out.print("> ");
                 chosenLanguage = Integer.valueOf(s.nextLine()) - 1;
+                System.out.println(chosenLanguage + 1); //temp
                 System.out.println();
                 if (chosenLanguage >= 0 && chosenLanguage < length) {
                     break;
@@ -57,6 +58,7 @@ public class Translator {
             try {
                 System.out.print("> ");
                 chosenLanguage = Integer.valueOf(s.nextLine()) - 2;
+                System.out.println(chosenLanguage + 2); //temp
                 System.out.println();
                 if (chosenLanguage >= -1 && chosenLanguage < length) {
                     break;
@@ -131,9 +133,9 @@ public class Translator {
         }
 
         if (translation == null) {
-            System.out.println("No translation for " + word + " currently exists in " + targetName);
+            System.out.println("No translation for \"" + word + "\" currently exists in " + targetName);
         } else {
-            System.out.println(word + " in " + sourceName + " is equal to " + translation + " in " + targetName + ".");
+            System.out.println("\"" + word + "\" in " + sourceName + " is equal to \"" + translation + "\" in " + targetName + ".");
         }
     }
 
@@ -193,10 +195,11 @@ public class Translator {
             return;
         }
 
+        String oldTranslation = l.translate(word);
         boolean isReplaced = l.replaceTranslation(word, newTranslation);
 
         if (isReplaced) {
-            System.out.println("Sucessfully replaced translation.");
+            System.out.println("Replaced \"" + word + " = " + oldTranslation + "\" with \"" + word + " = " + newTranslation + "\".");
         } else {
             System.out.println("\"" + word + "\" does not currently exist in " + l.name + " dictionary.");
         }
@@ -239,12 +242,16 @@ public class Translator {
 
         System.out.println(sourceName + "\t\tto " + targetName);
         if (sourceName.equals(targetName)) { // No two languages can have the same name
-            Iterator<String> words = source.getBiMap().getAllKeys().iterator();
-
-            String currentWord;
-            while (words.hasNext()) {
-                currentWord = words.next();
-                System.out.println(currentWord + "\t\t= " + currentWord);
+            if (source == null) {
+                System.out.println("The lingua franca does not store words of its own. Try comparing it to another language.");
+            } else {
+                Iterator<String> words = source.getBiMap().getAllValues().iterator();
+    
+                String currentWord;
+                while (words.hasNext()) {
+                    currentWord = words.next();
+                    System.out.println(currentWord + "\t\t= " + currentWord);
+                }
             }
         } else {
             if (sourceName.equals(linguaFranca)) {
@@ -355,6 +362,7 @@ public class Translator {
             System.out.println();
             System.out.print("Pick your action (0-10): ");
             inputString = s.nextLine();
+            System.out.print(inputString);
             System.out.println();
             try {
                 inputInt = Integer.valueOf(inputString);
@@ -369,7 +377,7 @@ public class Translator {
             } else if (inputInt == 2) {
                 addTranslation(linguaFranca, languages, s);
             } else if (inputInt == 3) {
-                removeTranslation(linguaFranca, languages, s);
+                replaceTranslation(linguaFranca, languages, s);
             } else if (inputInt == 4) {
                 removeTranslation(linguaFranca, languages, s);
             } else if (inputInt == 5) {
@@ -384,7 +392,7 @@ public class Translator {
                 printAllLanguages(linguaFranca, languages);
             } else if (inputInt == 10 || inputString.toLowerCase().equals("exit")) {
                 break;
-            } else if (inputString.toLowerCase().substring(0, 10).equals("quick test")) {
+            } else if (inputString.length() > 9 && inputString.toLowerCase().substring(0, 10).equals("quick test")) {
                 if (testRan && !inputString.toLowerCase().equals("quick test force")) {
                     System.out.println("Quick test has already been run.");
                 } else if (linguaFranca.equals("English")) {
