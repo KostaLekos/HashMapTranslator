@@ -30,7 +30,6 @@ public class Translator {
             try {
                 System.out.print("> ");
                 chosenLanguage = Integer.valueOf(s.nextLine()) - 1;
-                System.out.println(chosenLanguage + 1); //temp
                 System.out.println();
                 if (chosenLanguage >= 0 && chosenLanguage < length) {
                     break;
@@ -58,7 +57,6 @@ public class Translator {
             try {
                 System.out.print("> ");
                 chosenLanguage = Integer.valueOf(s.nextLine()) - 2;
-                System.out.println(chosenLanguage + 2); //temp
                 System.out.println();
                 if (chosenLanguage >= -1 && chosenLanguage < length) {
                     break;
@@ -362,7 +360,6 @@ public class Translator {
             System.out.println();
             System.out.print("Pick your action (0-10): ");
             inputString = s.nextLine();
-            System.out.print(inputString);
             System.out.println();
             try {
                 inputInt = Integer.valueOf(inputString);
