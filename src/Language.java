@@ -126,47 +126,4 @@ public class Language {
     public boolean isEmpty() {
         return translationDictionary.isEmpty();
     }
-
-
-    public static void main(String[] args) {
-        System.out.println("\nIf you are trying to use the translator, run Translator.java instead.");
-
-        // These languages are only examples
-        // Translations may not be accurate as I only have beginner knowledge of each (other than English of course)
-        // In this example the lingua franca is English, but it could work as a different language
-        /*
-        HashBiMap<String, String> spanish = new HashBiMap<>();
-        HashBiMap<String, String> greek = new HashBiMap<>();
-        HashBiMap<String, String> japanese = new HashBiMap<>();
-
-        String[] enWords = {"hi", "bye", "cat", "dog", 
-                            "person", "rice", "black", "tomorrow", 
-                            "yesterday", "today", "yes", "no"};
-
-        String[] spWords = {"hola", "adios", "gata", "perro", 
-                            "persona", "arroz", "negro", "mañana", 
-                            "ayer", "hoy", "si", "no"};
-
-        String[] grWords = {"γεια", "αντιο", "γατα", "σκυλο", 
-                            "προσωπο", "ρυζι", "μαυρος", "αυριο", 
-                            "εχθες", "σημερα", "ναι", "οχι"};
-
-        String[] jaWords = {"こんにちは", "さよなら", "猫", "犬", 
-                            "人", "御飯", "黒", "明日", 
-                            "昨日", "今日", "はい", "いいえ"};
-
-        addTranslations(enWords, spWords, spanish);
-        addTranslations(enWords, grWords, greek);
-        addTranslations(enWords, jaWords, japanese);
-
-        System.out.println("English \tto Spanish:");
-        printAllTranslations(spanish);
-        
-        System.out.println("English \tto Greek:");
-        printAllTranslations(greek);
-
-        System.out.println("English \tto Japanese:");
-        printAllTranslations(japanese);
-        */
-    }
 }

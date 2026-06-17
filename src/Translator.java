@@ -326,13 +326,13 @@ public class Translator {
             return;
         }
 
-        for (int i = 0; i < languages.size(); i++) {
-            if (languages.get(i).name.equals(languageName))
-                languages.remove(i);
-                System.out.println("Removed " + languageName + " language.");
-                return;
+        Language l = getLanguage(languageName, languages);
+        if (l != null ) {
+            languages.remove(l);
+            System.out.println("Removed " + languageName + " language.");
+        } else {
+            System.out.println(languageName + " does not exist.");
         }
-        System.out.println(languageName + " does not exist.");
     }
 
     public static void printAllLanguages(String linguaFranca, ArrayList<Language> languages) {

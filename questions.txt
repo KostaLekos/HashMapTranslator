@@ -1,0 +1,26 @@
+1. What problem does your project solve?
+    It acts as a database to store translations between single words of different languages. 
+    It could be used to store flashcard information for language learning and makes it easy
+    to convert between two languages that you didn't give a translation between by first translating
+    to English or another lingua franca.
+
+2. Why did you choose this data structure?
+    For two reasons. First because I wanted to learn more about Maps and Hashing data structures, 
+    and second because translations are a key:value pair so a map works well for them.
+
+3. What challenges did you encounter?
+    Finding a way to go from a value to a key in a hashmap. I settled on a Bidirectional Hash Map
+    because although not as memory efficent, it is very computationally efficent.
+
+4. What would you add if you had another week to work on it?
+    A few things. First I'd make a function that stores all the languages and their translations in
+    an offline file that would be parsed loaded into memory as HashMaps again so that data isn't lost
+    when the program terminates. I would also like to find a way to make the program a little more 
+    memory efficent by maybe using a datastructure with an expandle number of equivelences (instead of a 
+    pair of two values like a map, an expandable number of values that all equal each other) so that each 
+    word isn't stored twice and the English word isn't stored twice as many times as their are other languages.
+    Finally, I would like to add a quick/expert mode where you would just enter a command with special syntax and 
+    it would be parsed so that you could complete actions really fast and add many words at once.
+
+5. What did you learn from building this project?
+    How to use HashMaps and how to combine two together to make a Bidirectional Hash Map.

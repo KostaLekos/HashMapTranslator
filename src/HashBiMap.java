@@ -77,40 +77,4 @@ public class HashBiMap<K, V> {
     public boolean isEmpty() {
         return valueToKeyMap.isEmpty();
     }
-
-    // Main method to demonstrate the usage of the HashBiMap class
-    public static void main(String[] args) {
-        System.out.println("\nIf you are trying to use the translator, run Translator.java instead.");
-
-/*      // Create a HashBiMap with Integer keys and String values
-        HashBiMap<Integer, String> biMap = new HashBiMap<>();
-
-        // Add key-value pairs
-        biMap.put(1, "One");
-        biMap.put(2, "Two");
-        biMap.put(3, "Three");
-
-        // Retrieve values by key
-        System.out.println("Value for key 2: " + biMap.getValueByKey(2));
-
-        // Retrieve keys by value
-        System.out.println("Key for value 'Three': " + biMap.getKeyByValue("Three"));
-
-        // checks if a key or value exists
-        System.out.println("Contains key 4: " + biMap.containsKey(4));
-        System.out.println("Contains value 'One': " + biMap.containsValue("One"));
-
-        // Remove a key-value pair
-        biMap.removeByKey(1);
-
-        // Display all keys and values
-        System.out.println("All keys: " + biMap.getAllKeys());
-        System.out.println("All values: " + biMap.getAllValues());
-
-        // Clear the map
-        biMap.removeAll();
-
-        // checks if the map is empty after clearing
-        System.out.println("Is the map empty? " + (biMap.getAllKeys().isEmpty() && biMap.getAllValues().isEmpty())); */
-    }
 }
